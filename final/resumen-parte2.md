@@ -355,11 +355,18 @@ es equivalente a P.
 
 Hay dos tipos de procesos que podemos hacer,
 
-- Validación: es un chequeo manual que sirve para incremental la confianza de
-  que un modelo formal se corresponde con la realidad.
+- Validación: es un chequeo manual que sirve para incremental la confianza de que un modelo formal se corresponde con la realidad. Para validar un modelo formal, le aplicamos manipulaciones que preserven su semántica y denotación, generando distintas vistas del modelo que se puedan inspeccionar con el objetivo mencionado antes. Algunas estrategias de validación/vistas que podemos utilizar son: 
+  - FSP con pretty printing 
+  - LTS
+  - LTS minimizado
+  - Animación.
 
-- Verificación: Garantizar matemáticamente que dos modelos formales están
-  vinculados. Puede ser manual, semi manual o automático.
+- Verificación: Garantizar matemáticamente que dos modelos formales están vinculados. Puede ser manual, semi manual o automático. Estrategias de verificación:
+  - FSP con ocultamiento + bisimulación (con el FSP a verificar)
+  - Chequeo de ausencia de deadlock + algoritmo de alcanzabilidad (de dichos estados)
+  - Chequeo de ausencia de estados de error + algoritmo de alcanzabilidad
+  - Definir observadores que introducen estados de error + algoritmo de alcanzabilidad
+  - Describir propiedades en LTL + relación de satisfacibilidad entre LTL y FSP a verificar.
 
 ### Estados de error
 
@@ -375,7 +382,7 @@ Es decir, el sistema entra en erorr si cualquiera de sus componentes lo hace.
 
 - **Safety**: Nunca nada malo sucede
 
-  Los contraejemplos son trazas finitas
+  Los contraejemplos son trazas finitas. Si no existe traza finita que sea contraejemplo, no es prop de safety.
 
   Es **composicional**: si S cumple una prop de safety P, entonces para todo T,
   (S || T) cumple P.
@@ -385,7 +392,7 @@ Es decir, el sistema entra en erorr si cualquiera de sus componentes lo hace.
 
 - **Liveness**: Algo bueno siempre sucede
 
-  Todos los contraejemplos (salvo deadlocks) son trazas infinitas
+  Todos los contraejemplos (salvo deadlocks) son trazas infinitas. Si no existe traza infinita que sea contraejemplo, no es prop de safety.
 
   No es composicional. Si tengo que S cumple L, y la compongo con `STOP + \alpha
   S`, no va a hacer nada y no la va a cumplir.
